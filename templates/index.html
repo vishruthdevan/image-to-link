@@ -1,6 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script type="text/javascript">
+      window.onload = () => {
+        document.getElementById("pasteTarget").
+        addEventListener("paste", pasteHandler);
+      };
+
+      const pasteHandler = (e) => {
+        for (let i = 0 ; i < e.clipboardData.items.length ; i++) {
+          let item = e.clipboardData.items[i];
+          if (item.type.indexOf("image") != -1) {
+              let blob = item.getAsFile();
+              uploadImage(blob);
+          } 
+        }
+      };
+
+      function uploadImage(blob) {
+        var xhr = new XMLHttpRequest();
+
+        xhr.upload.onprogress = (e) => {
+            var percentComplete = (e.loaded / e.total) * 100;
+            console.log("Uploaded: " + percentComplete + "%");
+        };
+
+        xhr.onload = () => {
+            if (xhr.status == 200) {
+                alert("Sucess! Upload completed");
+            } else {
+                alert("Error! Upload failed");
+            }
+        };
+
+        xhr.onerror = () => {
+            alert("Error! Upload failed. Can not connect to server.");
+        };
+
+        xhr.open("POST", "FileUploader", true);
+        xhr.setRequestHeader("Content-Type", blob.type);
+        xhr.send(blob);
+    }
+    </script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,21 +51,7 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-    <script type="text/javascript">
-      window.onload = () => {
-        document.getElementById("pasteTarget").
-        addEventListener("paste", pasteHandler);
-      };
-
-      const handlePaste = (e) => {
-        for (let i = 0 ; i < e.clipboardData.items.length ; i++) {
-          let item = e.clipboardData.items[i];
-          if (item.type.indexOf("image") != -1) {
-              let blob = item.getAsFile();
-          } 
-        }
-      };
-    </script>
+    
 
 
     <title>Image-to-Link</title>

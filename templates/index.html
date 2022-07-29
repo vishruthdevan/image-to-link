@@ -20,24 +20,24 @@
       function uploadImage(blob) {
         var xhr = new XMLHttpRequest();
 
-        xhr.upload.onprogress = (e) => {
-            var percentComplete = (e.loaded / e.total) * 100;
-            console.log("Uploaded: " + percentComplete + "%");
-        };
+//        xhr.upload.onprogress = (e) => {
+//            var percentComplete = (e.loaded / e.total) * 100;
+//            console.log("Uploaded: " + percentComplete + "%");
+//        };
 
-        xhr.onload = () => {
-            if (xhr.status == 200) {
-                alert("Sucess! Upload completed");
-            } else {
-                alert("Error! Upload failed");
-            }
-        };
+//        xhr.onload = () => {
+//            if (xhr.status == 200) {
+//                alert("Sucess! Upload completed");
+//            } else {
+//                alert("Error! Upload failed");
+//            }
+//        };
+//
+//        xhr.onerror = () => {
+//            alert("Error! Upload failed. Can not connect to server.");
+//        }; 
 
-        xhr.onerror = () => {
-            alert("Error! Upload failed. Can not connect to server.");
-        };
-
-        xhr.open("POST", "FileUploader", true);
+        xhr.open("POST", "/FileUploader", true);
         xhr.setRequestHeader("Content-Type", blob.type);
         xhr.send(blob);
     }

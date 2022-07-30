@@ -20,24 +20,21 @@
       function uploadImage(blob) {
         var xhr = new XMLHttpRequest();
 
-//        xhr.upload.onprogress = (e) => {
-//            var percentComplete = (e.loaded / e.total) * 100;
-//            console.log("Uploaded: " + percentComplete + "%");
-//        };
+        xhr.onreadystatechange = (e) => {
+          if (xhr.readyState !== 4) {
+            return;
+          }
+        
+          if (xhr.status === 200) {
+            console.log('SUCCESS', xhr.responseText);
+            document.getElementById('pasteTarget').value = xhr.responseText;
+          } else {
+            console.warn('request_error');
+          }
+        };
 
-//        xhr.onload = () => {
-//            if (xhr.status == 200) {
-//                alert("Sucess! Upload completed");
-//            } else {
-//                alert("Error! Upload failed");
-//            }
-//        };
-//
-//        xhr.onerror = () => {
-//            alert("Error! Upload failed. Can not connect to server.");
-//        }; 
 
-        xhr.open("POST", "/FileUploader", true);
+        xhr.open("POST", "/FileUploader", false);
         xhr.setRequestHeader("Content-Type", blob.type);
         xhr.send(blob);
     }
@@ -51,9 +48,6 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-    
-
-
     <title>Image-to-Link</title>
   </head>
   <body>

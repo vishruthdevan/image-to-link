@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 flask = "*"
+fastapi = "*"
+uvicorn = "*"
 
 [dev-packages]
 black = "*"

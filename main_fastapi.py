@@ -4,7 +4,7 @@ import cloudinary
 import cloudinary.api
 import cloudinary.uploader
 from dotenv import load_dotenv
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response
 from fastapi.templating import Jinja2Templates
 
 load_dotenv()
@@ -32,8 +32,4 @@ async def FileUploader(request: Request):
         overwrite=True,
     )
     src_url = cloudinary.CloudinaryImage(file_name).build_url()
-    return src_url
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    return Response(src_url)

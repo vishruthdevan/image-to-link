@@ -1,3 +1,4 @@
+import uuid
 from http import HTTPStatus
 from mimetypes import guess_extension
 
@@ -23,13 +24,14 @@ def FileUploader():
     file = request.get_data()
     # with open(f"file{guess_extension(request.content_type)}", "wb") as blob:
     #     blob.write(file)
+    file_name = str(uuid.uuid4())
     cloudinary.uploader.upload(
         file,
-        public_id="file1",
+        public_id=file_name,
         unique_filename=False,
         overwrite=True,
     )
-    src_url = cloudinary.CloudinaryImage("file1").build_url()
+    src_url = cloudinary.CloudinaryImage(file_name).build_url()
     return src_url
 
 

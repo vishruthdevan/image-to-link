@@ -25,13 +25,13 @@ app.add_middleware(
 templates = Jinja2Templates(directory="templates")
 
 
-@app.route("/")
+@app.get("/")
 def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-@app.route("/FileUploader", methods=["GET", "POST"])
-async def FileUploader(request: Request):
+@app.post("/FileUploader")
+async def file_upload(request: Request):
     file = await request.body()
     # with open(f"file{guess_extension(request.content_type)}", "wb") as blob:
     #     blob.write(file)
